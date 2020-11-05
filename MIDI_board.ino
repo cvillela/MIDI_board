@@ -59,38 +59,13 @@ void updateButtons() {
     byte message = BUTTONS[i]->getValue();
 
     //  Button is pressed
-    if (message == 0) {
-      switch (BUTTONS[i]->Bcommand) {
-        case 0: //Note
-          MIDI.sendNoteOn(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
-          break;
-        case 1: //CC
-          MIDI.sendControlChange(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
-          break;
-        case 2: //Toggle
-          if (BUTTONS[i]->Btoggle == 0) {
-            MIDI.sendControlChange(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
-            BUTTONS[i]->Btoggle = 1;
-          }
-          else if (BUTTONS[i]->Btoggle == 1) {
-            MIDI.sendControlChange(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
-            BUTTONS[i]->Btoggle = 0;
-          }
-          break;
-      }
-    }
+    if (message == 0)
+        MIDI.sendNoteOn(BUTTONS[i]->Bvalue, 127, BUTTONS[i]->Bchannel);
 
     //  Button is not pressed
-    if (message == 1) {
-      switch (BUTTONS[i]->Bcommand) {
-        case 0:
-          MIDI.sendNoteOff(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
-          break;
-        case 1:
-          MIDI.sendControlChange(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
-          break;
-      }
-    }
+    if (message == 1) 
+      MIDI.sendNoteOff(BUTTONS[i]->Bvalue, 0, BUTTONS[i]->Bchannel);
+    
   }
 }
 

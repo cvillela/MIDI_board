@@ -6,29 +6,27 @@ MIDIButton::MIDIButton(byte pin, byte command, byte value, byte channel, byte de
 {
   _pin = pin;
   pinMode(_pin, INPUT_PULLUP);
-  _value = value;
-  _command = command;
   _debounce = debounce;
   _time = 0;
-  _status = 0b00000010;
+  _new = true;
+  _busy = false;
   _last = 1;
   Bcommand = command;
   Bvalue = value;
   Bchannel = channel;
-  Btoggle = 0;
 }
 
 byte MIDIButton::getValue()
 {
   // If BUSY bit not set - read MIDIButton
-  if (bitRead(_status, 0) == false) { // If busy false
+  if (_busy == false) { // If busy false
     if (digitalRead(_pin) == _last) return 2; // If same as last state - exit
   }
 
   // If NEW Bit set - Key just pressed, record time
-  if (bitRead(_status, 1) == true) { // If new is true
-    bitSet(_status, 0); // Set busy TRUE
-    bitClear(_status, 1); // Set New FALSE
+  if (_new == true) { // If new is true
+    _busy = true; // Set busy TRUE
+    _new = false; // Set New FALSE
     _time = millis();
     return 255;
   }
@@ -39,23 +37,17 @@ byte MIDIButton::getValue()
   // Debounce time has passed. Read pin to see if still set the same
   // If it has changed back - assume false alarm
   if (digitalRead(_pin) == _last) {
-    bitClear(_status, 0); // Set busy false
-    bitSet(_status, 1); // Set new true
+    _busy = false; // Set busy false
+    _new = true; // Set new true
     return 255;
   }
 
   // If this point is reached, event is valid. return event type
   else {
-    bitClear(_status, 0); // Set busy false
-    bitSet(_status, 1); // Set new true
+    _busy = false; // Set busy false
+    _new = true; // Set new true
     _last = ((~_last) & 0b00000001); // invert _last
     return _last;
   }
 }
 
-void MIDIButton::newValue(byte command, byte value, byte channel)
-{
-  Bvalue = value;
-  Bcommand = command;
-  Bchannel = channel;
-}
