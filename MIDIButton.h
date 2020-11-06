@@ -9,8 +9,10 @@ class MIDIButton
 {
   public:
     MIDIButton(byte pin, byte command, byte value, byte channel, byte debounce);
-    byte getValue();
     
+    byte getValue();
+    void setValue(byte command, byte control, byte channel)
+
     byte Bcommand;
     byte Bvalue;
     byte Bchannel;
