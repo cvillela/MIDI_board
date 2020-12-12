@@ -13,7 +13,6 @@
 #ifndef LCDMANAGER_H
 #define LCDMANAGER_H  
 
-#include <displayTest.h>
 #include <LCDWIKI_GUI.h> //Core graphics library
 #include <LCDWIKI_SPI.h> //Hardware-specific library
 #include <SPI.h>
@@ -146,7 +145,3 @@ unsigned long showFeatureButtons(int x, int y, String R, String S, String O);
 unsigned long showEnd();
 
 #endif
-
-
-
-
