@@ -10,7 +10,7 @@
 /* Date: 12/2020                                       */
 /* *************************************************** */
 
-#include <lcdManagert.h>
+#include <lcdManager.h>
 #include <LCDWIKI_GUI.h> //Core graphics library
 #include <LCDWIKI_SPI.h> //Hardware-specific library
 #include <SPI.h>
