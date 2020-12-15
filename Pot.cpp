@@ -9,6 +9,7 @@ Pot::Pot(byte pin, byte command, byte control, byte channel)
   _value = _value >> 3;
   _oldValue = _value << 3;
   _value = _value << 3;
+  
   Pcommand = command;
   Pcontrol = control;
   Pchannel = channel;
@@ -26,7 +27,7 @@ byte Pot::getValue()
   return 255;
 }
 
-void Pot::newValue(byte command, byte value, byte channel) {
+void Pot::setValue(byte command, byte value, byte channel) {
   Pcommand = command;
   Pcontrol = value;
   Pchannel = channel;

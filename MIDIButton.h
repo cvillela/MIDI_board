@@ -4,29 +4,24 @@
 
 
 //************************************************************************
-//Button (Pin Number, Command, Note Number, Channel, Debounce Time)
+//Button (Command, Note Number, Channel)
 class MIDIButton
 {
   public:
-    MIDIButton(byte pin, byte command, byte value, byte channel, byte debounce);
+    MIDIButton(byte command, byte note, byte channel);
+    
+    void setNote(int note);
+    void setMsg(byte msg);
     byte getValue();
-    void newValue(byte command, byte value, byte channel);
+
     byte Bcommand;
-    byte Bvalue;
+    byte Bnote;
     byte Bchannel;
-    byte Btoggle;
 
   private:
-    byte _previous;
-    byte _current;
-    unsigned long _time;
-    int _debounce;
-    byte _pin;
-    byte _value;
-    byte _command;
-    byte _status;
-    byte _last;
-    byte _enablepin;
+    byte msg;
+    byte last;
+
 };
 
 #endif
