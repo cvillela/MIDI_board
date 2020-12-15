@@ -9,7 +9,7 @@ class Pot
   public:
     Pot(byte pin, byte command, byte control, byte channel);
     
-    void setValue(byte command, byte control, byte channel)
+    void setValue(byte command, byte control, byte channel);
     byte getValue();
     
     byte Pcommand;
