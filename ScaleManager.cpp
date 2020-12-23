@@ -117,10 +117,6 @@ void ScaleManager::updateMode(int dir){
    }
    setScale(modos_array[Imode]);
    
-   for(int i = 0; i < 7; i++){
-//    Serial.println(modos_array[Imode][i]);
-   }
-   
 }
 
 void ScaleManager::updateOctave(int dir){

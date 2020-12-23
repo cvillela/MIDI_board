@@ -18,35 +18,33 @@ LOOPButton::LOOPButton(byte pin, byte command, byte value, byte channel, byte de
 
 byte LOOPButton::getValue()
 {
-  // If BUSY bit not set - read MIDIButton
-  if (_busy == false) { // If busy false
-    if (digitalRead(_pin) == _last) return 2; // If same as last state - exit
+  // Se busy não estivert setado - read MIDIButton
+  if (_busy == false) {
+    if (digitalRead(_pin) == _last) return 2;
   }
 
-  // If NEW Bit set - Key just pressed, record time
-  if (_new == true) { // If new is true
-    _busy = true; // Set busy TRUE
-    _new = false; // Set New FALSE
+  // Se novo bit setado, checa tempo
+  if (_new == true) {
+    _busy = true;
+    _new = false;
     _time = millis();
     return 255;
   }
 
-  // Check if debounce time has passed - If no, exit
+  // Checar debounce
   if (millis() - _time < _debounce) return 255;
 
-  // Read pin to see if still set the same
-  // If it has changed back - assume false alarm
+  // Checar estado do pino
   if (digitalRead(_pin) == _last) {
-    _busy = false; // Set busy false
-    _new = true; // Set new true
+    _busy = false;
+    _new = true;
     return 255;
   }
 
-  // If this point is reached, return event type
   else {
-    _busy = false; // Set busy false
-    _new = true; // Set new true
-    _last = ((~_last) & 0b00000001); // invert _last
+    _busy = false;
+    _new = true;
+    _last = ((~_last) & 0b00000001);
     return _last;
   }
 }

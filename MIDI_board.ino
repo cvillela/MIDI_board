@@ -85,7 +85,6 @@ MIDIButton *TRACKBUTTONS[] {&BU1, &BU2, &BU3, &BUA};
 
 
 //************************************************
-// Functions
 void setup() {
   MIDI.begin(MIDI_CHANNEL_OFF);
   Serial.begin(115200);
@@ -105,11 +104,11 @@ void loop() {
 //*****************************************************************
 void updateMIDIButtons(int msg) {
 
-  //  Button is not pressed
+  // Button is not pressed
   if (msg == 0)
     MIDI.sendNoteOff(MIDIBUTTONS[ICurrentButton]->Bnote, 0, MIDIBUTTONS[ICurrentButton]->Bchannel);
 
-  //  Button is pressed
+  // Button is pressed
   else if (msg == 1) 
     MIDI.sendNoteOn(MIDIBUTTONS[ICurrentButton]->Bnote, 127, MIDIBUTTONS[ICurrentButton]->Bchannel);
 
@@ -118,11 +117,11 @@ void updateMIDIButtons(int msg) {
 //*****************************************************************
 void updateTRACKBUTTONS(int msg) {
 
-  //  Button is not pressed
+  // Button is not pressed
   if (msg == 0)
     MIDI.sendNoteOff(TRACKBUTTONS[ICurrentButton]->Bnote, 0, TRACKBUTTONS[ICurrentButton]->Bchannel);
 
-  //  Button is pressed
+  // Button is pressed
   else if (msg == 1) 
     MIDI.sendNoteOn(TRACKBUTTONS[ICurrentButton]->Bnote, 127, TRACKBUTTONS[ICurrentButton]->Bchannel);
 
@@ -342,6 +341,6 @@ void updateScreen(){
   // Oitava [é um número msm]
   //int -> scale_manager.Ioctave;
 
-  //Selected Param
+  // Selected Param -> Converter de acordo com a explicacao acima da funcao
   // int -> IGlobalParam;
 }

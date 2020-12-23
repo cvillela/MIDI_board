@@ -38,7 +38,6 @@ class ScaleManager
       {1, 0, 1, 1, 0, 1, 1},  //Eólio
       {0, 1, 1, 0, 1, 1, 1}   //Lócrio
     };
-
 };
 
 #endif
