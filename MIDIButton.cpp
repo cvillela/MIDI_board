@@ -6,9 +6,6 @@ MIDIButton::MIDIButton( byte command, byte note, byte channel){
   Bcommand = command;
   Bnote = note;
   Bchannel = channel;
-  msg = 2;
-  last = 2;
-
 }
 
 void MIDIButton::setNote(int Inote){

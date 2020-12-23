@@ -34,7 +34,7 @@ byte LOOPButton::getValue()
   // Check if debounce time has passed - If no, exit
   if (millis() - _time < _debounce) return 255;
 
-  // Debounce time has passed. Read pin to see if still set the same
+  // Read pin to see if still set the same
   // If it has changed back - assume false alarm
   if (digitalRead(_pin) == _last) {
     _busy = false; // Set busy false
@@ -42,7 +42,7 @@ byte LOOPButton::getValue()
     return 255;
   }
 
-  // If this point is reached, event is valid. return event type
+  // If this point is reached, return event type
   else {
     _busy = false; // Set busy false
     _new = true; // Set new true

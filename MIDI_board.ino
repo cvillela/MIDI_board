@@ -334,13 +334,14 @@ void setMIDINotes(){
 void updateScreen(){
 
   // Modo ou Escala escolhidos
-  char* cNote = scale_manager.cNote[scale_manager.Iroot];
+  //const char* -> scale_manager.cNote[scale_manager.Iroot];
   
-  // Nota escolhida, "tom"
-  char* cMode = scale_manager.cMode[scale_manager.Imode];
+  // Nota escolhida, root
+  //const char* -> scale_manager.cMode[scale_manager.Imode];
   
   // Oitava [é um número msm]
-  int Ioctave = scale_manager.Ioctave;
+  //int -> scale_manager.Ioctave;
 
-  //Selected Param = IGlobalParam
+  //Selected Param
+  // int -> IGlobalParam;
 }

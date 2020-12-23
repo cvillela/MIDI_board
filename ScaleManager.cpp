@@ -3,9 +3,31 @@
 //***************************************************************
 ScaleManager::ScaleManager()
 {   
-   Iroot = 0;
-   Ioctave = 4;
-   Imode = 0;
+    Iroot = 0;
+    Ioctave = 4;
+    Imode = 0;
+
+    cMode[0] = "Jônio";
+    cMode[1] = "Dórico";
+    cMode[2] = "Frígio";
+    cMode[3] = "Lídio";
+    cMode[4] = "Mixolídio";
+    cMode[5] = "Eólio";
+    cMode[6] = "Lócrio";
+  
+    cNote[0] = "C";
+    cNote[1] = "C#";
+    cNote[2] = "D";
+    cNote[3] = "D#";
+    cNote[4] = "E";
+    cNote[5] = "F";
+    cNote[6] = "F#";
+    cNote[7] = "G";
+    cNote[8] = "G#";
+    cNote[9] = "A";
+    cNote[10] = "Bb";
+    cNote[11] = "B";
+  
 
    int initial_notes[8] = {60, 62, 64, 65, 67, 69, 71, 72};
    for(int i = 0; i < 8; i++){
