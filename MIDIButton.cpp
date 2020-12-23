@@ -11,21 +11,6 @@ MIDIButton::MIDIButton( byte command, byte note, byte channel){
 
 }
 
-void MIDIButton::setMsg(byte val){
-  msg = val;
-}
-
-
-byte MIDIButton::getValue(){
- if (msg == last){
-    return 2;
- }
- else {
-    last = msg;
-    return msg;
- }
-}
-
 void MIDIButton::setNote(int Inote){
   Bnote = (byte)Inote;
 }

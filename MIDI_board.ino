@@ -19,7 +19,6 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 
 int ICurrentButton = 0;
 int IglobalParam = 1;
-unsigned long time = 0;
 //******************************************************
 // Keypad
 const byte ROWS = 4;
@@ -92,6 +91,8 @@ void setup() {
   Serial.begin(115200);
   keypad.addEventListener(keypadEvent);
   keypad.setDebounceTime(10);
+  setMIDINotes();
+  updateScreen();
 }
 
 void loop() {
@@ -193,20 +194,24 @@ void keypadEvent(KeypadEvent key){
           case '4':
             scale_manager.updateScale(IglobalParam, 0);
             setMIDINotes();
+            updateScreen();
             break;
           case '5':
             scale_manager.updateScale(IglobalParam, 1);
             setMIDINotes();
+            updateScreen();
             break;
           
           //CONFIG 2
           case '6':
             msg = 2;
             updateGlobalParam(0);
+            updateScreen();
             break;
           case 'B':
             msg = 2;
             updateGlobalParam(1);
+            updateScreen();
             break;
 
           //LOOP
@@ -316,4 +321,26 @@ void setMIDINotes(){
     MIDIBUTTONS[i]->setNote(scale_manager.SMnotes[i]);
   }
 
+}
+
+//*************************************************************************
+// JOGAR AQUI DENTRO MÉTODO DE UPDATE NA SCREEN
+
+// IGlobalParam -> o que está sendo updated
+// 1 == ROOT
+// 2 == MODE
+// 3 == OCTAVE
+
+void updateScreen(){
+
+  // Modo ou Escala escolhidos
+  char* cNote = scale_manager.cNote[scale_manager.Iroot];
+  
+  // Nota escolhida, "tom"
+  char* cMode = scale_manager.cMode[scale_manager.Imode];
+  
+  // Oitava [é um número msm]
+  int Ioctave = scale_manager.Ioctave;
+
+  //Selected Param = IGlobalParam
 }
