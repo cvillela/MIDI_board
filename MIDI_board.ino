@@ -1,6 +1,7 @@
 //******************************************************
 // Library imports
 #include <MIDI.h>
+#include <SPI.h>
 #include "Keypad.h"
 
 // Header imports
@@ -8,8 +9,12 @@
 #include "MIDIButton.h"
 #include "ScaleManager.h"
 #include "LOOPButton.h"
+#include "LCDWIKI_GUI.h" //Core graphics library
+#include "LCDWIKI_SPI.h" //Hardware-specific library
 
+#define BLACK   0x0000
 //******************************************************
+LCDWIKI_SPI mylcd(SSD1283A,10,6,2,A0); //hardware spi,CS,CD,RESET
 MIDI_CREATE_DEFAULT_INSTANCE();
 //******************************************************
 // Global parameter storing param to be updated
@@ -44,14 +49,18 @@ ScaleManager scale_manager = ScaleManager();
 // Array size
 byte NUMBER_MIDI_BUTTONS = 8;
 byte NUMBER_TRACK_BUTTONS = 4;
-byte NUMBER_POTS = 1;
+byte NUMBER_POTS = 5;
 
 //************************************************
 //Pot (Pin Number, Command, CC Control, Channel Number)
-Pot PO1(A0, 0, 1, 1);
+Pot PO1(A1, 0, 1, 1); // Slide 1
+Pot PO2(A2, 0, 1, 2); // Slide 2
+Pot PO3(A3, 0, 1, 3); // Knob 1
+Pot PO4(A4, 0, 1, 4); // Knob 2
+Pot PO5(A5, 0, 1, 5); // Knob 3
 
 // Pot array
-Pot *POTS[] {&PO1};
+Pot *POTS[] {&PO1, &PO2, &PO3, &PO4, &PO5};
 
 //************************************************
 // LOOPButton (Pin Number, Command, Note Number, Channel, Debounce Time)
@@ -91,7 +100,12 @@ void setup() {
   keypad.addEventListener(keypadEvent);
   keypad.setDebounceTime(10);
   setMIDINotes();
-  updateScreen();
+  mylcd.Init_LCD();// Inicializa o modulo SPI do LCD
+  mylcd.clearScreen();
+  mylcd.Fill_Screen(BLACK); // Preenche todo o background
+  mylcd.showBegin();
+  delay(1000);
+  mylcd.clearScreen();
 }
 
 void loop() {
@@ -118,13 +132,13 @@ void updateMIDIButtons(int msg) {
 void updateTRACKBUTTONS(int msg) {
 
   // Button is not pressed
-  if (msg == 0)
+  if (msg == 0){
     MIDI.sendNoteOff(TRACKBUTTONS[ICurrentButton]->Bnote, 0, TRACKBUTTONS[ICurrentButton]->Bchannel);
-
+  }
   // Button is pressed
-  else if (msg == 1) 
+  else if (msg == 1){ 
     MIDI.sendNoteOn(TRACKBUTTONS[ICurrentButton]->Bnote, 127, TRACKBUTTONS[ICurrentButton]->Bchannel);
-
+  }
 }
 
 //***********************************************************************
@@ -141,13 +155,14 @@ void updateLoop() {
   byte message = BUL.getValue();
 
   //  Button is pressed
-  if (message == 0)
+  if (message == 0){
       MIDI.sendNoteOn(BUL.Bvalue, 127, BUL.Bchannel);
-
+  }
+  
   //  Button is not pressed
-  if (message == 1) 
+  if (message == 1){ 
     MIDI.sendNoteOff(BUL.Bvalue, 0, BUL.Bchannel);
-    
+  }
 }
 
 //***********************************************************************
@@ -332,15 +347,11 @@ void setMIDINotes(){
 
 void updateScreen(){
 
-  // Modo ou Escala escolhidos
-  //const char* -> scale_manager.cNote[scale_manager.Iroot];
+  String sRoot = String(scale_manager.cNote[scale_manager.Iroot]);
+  String sModo = String(scale_manager.cMode[scale_manager.Imode]);
+  String sOitava = String(scale_manager.Ioctave);
   
-  // Nota escolhida, root
-  //const char* -> scale_manager.cMode[scale_manager.Imode];
-  
-  // Oitava [é um número msm]
-  //int -> scale_manager.Ioctave;
-
-  // Selected Param -> Converter de acordo com a explicacao acima da funcao
-  // int -> IGlobalParam;
+  mylcd.clearScreen();
+  mylcd.showLooperButtons(0,0);
+  mylcd.showFeatureButtons(10,55, sRoot, sModo, sOitava);
 }
